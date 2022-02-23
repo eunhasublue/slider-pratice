@@ -1,0 +1,83 @@
+@charset 'UTF-8';
+@import "reset";
+
+#slider {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  .panel {
+    width: 500%;
+    height: 100%;
+
+    //slider & panel이 100% 이기 때문에 100%를 주면 안된다.
+    //panel이 500%가 되는 순간에 100%가 되면 안된다.
+    //5등분해서 받아야하기 때문에
+    li {
+      width: 20%;
+      height: 100%;
+      float: left;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed; //위치가 브라우저로 종속됨
+
+      @for $i from 1 through 5 {
+        &:nth-of-type(#{$i}) {
+          background-image: url("../img/pic#{$i}.jpg");
+        }
+      }
+    }
+  }
+
+  .btns {
+    position: absolute;
+    bottom: 5vh;
+    left: 5%;
+    width: 90%;
+
+    li {
+      float: left;
+      width: 20%;
+      padding: 20px;
+      // 넓이값이 90%인데, 그 안쪽에 다시 button이 5갠데 넓이값 20%줬기 때문에 간격이 없기 때문에
+      // li 안쪽에 있는 패딩값이 a 태그 기준에서 봤을때 바깥 여백처럼 보일것이다.
+      perspective: 500px;
+
+      a {
+        display: block;
+        width: 100%;
+        height: 40px;
+        border: 1px solid #222;
+        font: 14px/40px "arial";
+        color: #222;
+        text-align: center;
+        border-radius: 20px;
+        transition: 1s;
+      }
+
+      &.on {
+        a {
+          background: #222;
+          color: #fff;
+          transform: rotateY(360deg);
+        }
+      }
+    }
+  }
+
+  #ring {
+    position: absolute;
+    top: 50%;
+    margin-top: -160px;
+    right: -160px;
+    transition: 1s;
+
+    @for $i from 0 through 4 {
+      &.rot#{$i} {
+        transform: rotate(#{$i * 60}deg);
+      }
+    }
+  }
+}
